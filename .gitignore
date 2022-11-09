@@ -1,0 +1,5 @@
+.vscode/
+*.runsrc
+*.obj
+*.out
+*.bin
