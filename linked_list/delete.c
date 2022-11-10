@@ -113,8 +113,46 @@ void delete_from_position(struct node** head, int position) {
   free(current);
 }
 
-// 4. delete a node after a specific node
+// 4. delete a node after a specific node having {data}
 void delete_after_node(struct node** head, int data) {
+  // if the list is empty, nothing to delete
+  if (is_empty(*head)) {
+    printf("[ERROR] The linked list is already empty.");
+    return;
+  }
+
+  // temp node* to traverse and store the address of the current node
+  struct node* current = *head;
+
+  // 1. traverse upto the node having {data} as well as checking for next node
+  while (data != current->data && current->next) {
+    current = current->next;
+  }
+
+  // 2. if node having data is found
+  if (data == current->data) {
+    // 2.1 check if the node have any node after it
+    if (current->next) {
+      // 2.2 if the next node present, store it's address in temp var
+      struct node* next_node = current->next;
+      // update the current node to next node's next
+      // it can be of 2 things:
+      // 1. address of next after next
+      // 2. NULL if the next node is the last
+      current->next = next_node->next;
+      // free the next node after the node having data
+      free(next_node);
+      return;
+    }
+
+    // 2.2 if control is here, it means the node having desired data is the last node
+    // hence, current->next is NULL, no node to delete
+    printf("[ERROR] There is no node to delete after the node having data %d.\n", data);
+    return;
+  }
+
+  // if control is here, it means no node having the desired data found.
+  printf("[ERROR] Node with data %d not found.\n", data);
 }
 
 int main(int argc, char const* argv[]) {
@@ -146,6 +184,14 @@ int main(int argc, char const* argv[]) {
   printf("Enter the postion from which you want to delete a node: ");
   scanf("%d", &position);
   delete_from_position(&head, position);
+  // print the new linked list
+  print_linked_list(head);
+
+  // 4. delete a node after a specific node
+  int data;
+  printf("Enter the data of the node after which you want to delete a node: ");
+  scanf("%d", &data);
+  delete_after_node(&head, data);
   // print the new linked list
   print_linked_list(head);
 
