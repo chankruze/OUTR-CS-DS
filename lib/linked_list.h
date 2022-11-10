@@ -22,11 +22,13 @@ void print_linked_list(struct node *head) {
   struct node *current_node = head; /* point current node to first node's address */
   int index = 1;                    /* loop counter */
 
+  printf("------ Linked List [start] ------\n");
   while (current_node != NULL) {
-    printf("node %d {data = %d | next = %p}\n", index, current_node->data, current_node->next);
+    printf("#%d\t[%p]\t{data = %d\t| next = %p}\n", index, current_node, current_node->data, current_node->next);
     current_node = current_node->next; /* update current node address */
     index++;                           /* update loop counter */
   }
+  printf("------- Linked List [end] -------\n");
 }
 
 struct node *create_node(int data) {
@@ -38,4 +40,8 @@ struct node *create_node(int data) {
 
 int is_empty(struct node *head) {
   return head == NULL;
+}
+
+void print_node(struct node *_node) {
+  printf("node {data = %d, next = %p}\n", _node->data, _node->next);
 }
