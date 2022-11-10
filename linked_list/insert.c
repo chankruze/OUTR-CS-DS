@@ -66,7 +66,25 @@ void insert_at_end(struct node** head) {
 }
 
 // insert a new node
-void insert_at_start(struct node* head) {
+void insert_at_start(struct node** head) {
+  // create a new node
+  int data;
+  printf("Enter the value of the new node: ");
+  scanf("%d", &data);
+  struct node* _node = create_node(data);
+  // check if the list is empty
+  // if so, then update head to point to the new node
+  if (is_empty(*head)) {
+    *head = _node;
+    return;
+  }
+
+  // if the list is not empty then point the head to
+  // the new node as well as point the new node to
+  // the previous 1st node's location
+  struct node* prev_first = *head;
+  *head = _node;
+  _node->next = prev_first;
 }
 
 // insert a new node at a specific position
@@ -87,14 +105,29 @@ int main(int argc, char const* argv[]) {
   create(&head, n);
   // print the linked list
   print_linked_list(head);
-  // no of new nodes to insert at the end
-  int no_of_new_nodes = 1;
-  // ask the user to enter a number for n
+  // no of new nodes to insert at the end/start
+  int no_of_new_nodes = 0;
+  /**
+   * insert at the end
+   */
+  // ask the user to enter a number for no_of_new_nodes
   printf("How many nodes do you want to insert at the end? (i.e. 1): ");
   scanf("%d", &no_of_new_nodes);
   // insert a new node at the end
   for (size_t i = 0; i < no_of_new_nodes; i++) {
     insert_at_end(&head);
+  }
+  // print the new linked list
+  print_linked_list(head);
+  /**
+   *  insert at the start
+   */
+  // ask the user to enter a number for no_of_new_nodes
+  printf("How many nodes do you want to insert at the start? (i.e. 1): ");
+  scanf("%d", &no_of_new_nodes);
+  // insert a new node at the end
+  for (size_t i = 0; i < no_of_new_nodes; i++) {
+    insert_at_start(&head);
   }
   // print the new linked list
   print_linked_list(head);
