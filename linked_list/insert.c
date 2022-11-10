@@ -88,7 +88,53 @@ void insert_at_start(struct node** head) {
 }
 
 // insert a new node at a specific position
-void insert_at_position(struct node* head, int position) {
+void insert_at_position(struct node** head, int position) {
+  // create a new node
+  int data;
+  printf("Enter the value of the new node: ");
+  scanf("%d", &data);
+
+  // check if the given position is valid or not
+  // check if the list is empty
+  if (is_empty(*head)) {
+    printf("[ERROR] List is empty. Can't add %d at %dth position\n", data,
+           position);
+    return;
+  }
+
+  // count total nodes
+  int total_nodes = count_nodes(*head);
+  // if the desired position is out of bound
+  if (position > total_nodes) {
+    printf(
+        "[ERROR] Total %d nodes present. %dth node can't be created.\n",
+        total_nodes, position);
+    return;
+  }
+
+  struct node* _node = create_node(data);
+
+  // if the list is not empty then traverse the list upto (position-1)th location
+  // and storing the prev node in a temp node* then,
+  // 1. update new node's next to {position-1}th node's link (previously {position}th node's address)
+  // 2. update {position-1}th node's next to point to new node's address
+
+  if (position == 1) {
+    _node->next = *head;
+    *head = _node;
+    return;
+  }
+
+  struct node* prev = *head;
+
+  for (size_t i = 1; i < position - 1; ++i) {
+    prev = prev->next;
+  }
+
+  // update new node's next to {position-1}th node's link (previously nth node's address)
+  _node->next = prev->next;
+  // fix {position-1}th node's next to point to new node's address
+  prev->next = _node;
 }
 
 // driver function
@@ -129,6 +175,17 @@ int main(int argc, char const* argv[]) {
   for (size_t i = 0; i < no_of_new_nodes; i++) {
     insert_at_start(&head);
   }
+  // print the new linked list
+  print_linked_list(head);
+  /**
+   *  insert at the start
+   */
+  // ask the user to enter a number for no_of_new_nodes
+  int position;
+  printf("At which position do you want to insert a new node? (min: 1): ");
+  scanf("%d", &position);
+  // insert a new node at the given position
+  insert_at_position(&head, position);
   // print the new linked list
   print_linked_list(head);
   // all ok, exit

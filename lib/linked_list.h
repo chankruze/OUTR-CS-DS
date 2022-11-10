@@ -45,3 +45,16 @@ int is_empty(struct node *head) {
 void print_node(struct node *_node) {
   printf("node {data = %d, next = %p}\n", _node->data, _node->next);
 }
+
+int count_nodes(struct node *head) {
+  int count = 0;
+
+  struct node *current_node = head;
+
+  while (current_node) {
+    current_node = current_node->next;
+    count++;
+  }
+
+  return count;
+}
