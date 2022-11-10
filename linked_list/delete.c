@@ -64,6 +64,53 @@ void delete_from_start(struct node** head) {
 
 // 3. delete a node from a specific position
 void delete_from_position(struct node** head, int position) {
+  // if the list is empty, nothing to delete
+  if (is_empty(*head)) {
+    printf("[ERROR] The linked list is already empty.");
+    return;
+  }
+
+  // check if the position is valid
+  int total_nodes = count_nodes(*head);
+  if (position > total_nodes) {
+    printf("[ERROR] The list contains %d nodes. You are trying to delete the %dth node.\n", total_nodes, position);
+  }
+
+  /**
+   * 1. travers the list upto {position}, keeping track of current and previous node.
+   * 2. update the {position-1}th (prev) node to point to {position}th's (current's) next.
+   * 3. free the {position}th (current) node
+   */
+
+  if (position == 1) {
+    // store the first node address in a temp variable
+    struct node* first_node = *head;
+    // update the head to point to the 2nd node
+    *head = first_node->next;
+    // print the deleted node
+    printf("deleted: ");
+    print_node(first_node);
+    // free the first node
+    free(first_node);
+    return;
+  }
+
+  struct node* current = *head;
+  struct node* prev = *head;
+
+  //  1. travers the list upto {position}, keeping track of current and previous node.
+  for (int i = 2; i <= position; ++i) {
+    prev = current;
+    current = current->next;
+  }
+
+  // 2. update the {position-1}th (prev) node to point to {position}th's (current's) next.
+  prev->next = current->next;
+  // print the deleted node
+  printf("deleted: ");
+  print_node(current);
+  // 3. free the{position} th(current) node
+  free(current);
 }
 
 // 4. delete a node after a specific node
@@ -91,6 +138,14 @@ int main(int argc, char const* argv[]) {
 
   // 2. delete a node from the start
   delete_from_start(&head);
+  // print the new linked list
+  print_linked_list(head);
+
+  // 3. delete a node from a specific position
+  int position;
+  printf("Enter the postion from which you want to delete a node: ");
+  scanf("%d", &position);
+  delete_from_position(&head, position);
   // print the new linked list
   print_linked_list(head);
 
