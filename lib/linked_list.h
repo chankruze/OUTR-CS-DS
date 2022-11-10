@@ -8,8 +8,8 @@ Copyright (c) geekofia 2022 and beyond
 #include <stdlib.h>
 
 struct node {
-  int data;          /* data: integer value */
-  struct node *next; /* next: address of the next node */
+  int data;          /* integer value */
+  struct node *next; /* address of the next node */
 };
 
 void print_linked_list(struct node *head) {
@@ -27,4 +27,15 @@ void print_linked_list(struct node *head) {
     current_node = current_node->next; /* update current node address */
     index++;                           /* update loop counter */
   }
+}
+
+struct node *create_node(int data) {
+  struct node *_node = malloc(sizeof(struct node));
+  _node->data = data;
+  _node->next = NULL;
+  return _node;
+}
+
+int is_empty(struct node *head) {
+  return head == NULL;
 }
