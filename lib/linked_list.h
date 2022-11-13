@@ -15,7 +15,7 @@ struct node {
 void print_linked_list(struct node *head) {
   // if the linked list is empty then head will be NULL
   if (head == NULL) {
-    printf("Linked list is empty.");
+    printf("Linked list is empty.\n");
     return;
   }
 
