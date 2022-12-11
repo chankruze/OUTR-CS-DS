@@ -8,6 +8,7 @@ Copyright (c) geekofia 2022 and beyond
 #include <stdio.h>
 
 #include "../lib/linked_list.h"
+
 void create(struct node** head, int n) {
   // if user input is 0, exit
   if (n == 0) {
